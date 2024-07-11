@@ -1,8 +1,9 @@
 //12100
 #include <bits/stdc++.h>
 
-int board[30][30];
-int board2[30][30];
+int board[21][21];
+int board2[21][21];
+bool merged[21][21];
 int n;
 
 int dx[] = {1, 0, -1, 0};
@@ -56,8 +57,11 @@ void move(int curx, int cury, int dir) {
             curx = x;
             cury = y;
         } else if(board2[x][y] == board2[curx][cury]) {
-            board2[x][y] *= 2;
-            board2[curx][cury] = 0;
+            if(merged[x][y] == 0) {
+                board2[x][y] *= 2;
+                board2[curx][cury] = 0;
+                merged[x][y] = 1;
+            }
             break;
         } else break;
     }
@@ -88,6 +92,12 @@ int main(void) {
             int dir = brute % 4;
             brute /= 4;
             select(dir);
+
+            for(int j = 0; j < n; j++) {
+                for(int k = 0; k < n; k++) {
+                    merged[j][k] = 0;
+                }
+            }
         }
 
         for(int i = 0; i < n; i++) {
