@@ -1,32 +1,27 @@
-//1654 pharametric
+//18870
 #include <bits/stdc++.h>
 
-int k, n;
-int arr[10001];
+int n;
+int arr[1000001];
+std::vector<int> temp, uniq;
 
 int main(void) {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    std::cin >> k >> n;
-    for(int i = 0; i < k; i++) std::cin >> arr[i];
-    std::sort(arr, arr + k);
-
-    long long st = 1;
-    long long en = arr[0];
-    while(st < en) {
-        long long mid = (st + en + 1) / 2;
-        int num = 0;
-        for(int i = 0; i < k; i++) {
-            num += arr[i] / mid;
-        }
-
-        if(num >= n) {
-            st = mid;
-        } else {
-            en = mid - 1;
-        }
+    std::cin >> n;
+    for(int i = 0; i < n; i++) {
+        std::cin >> arr[i];
+        temp.push_back(arr[i]);
+    }
+    std::sort(temp.begin(), temp.end());
+    for(int i = 0; i < n; i++) {
+        if(i == 0 || temp[i - 1] != temp[i]) uniq.push_back(temp[i]);
     }
 
-    std::cout << st;
+    for(int i = 0; i < n; i++) {
+        std::cout << std::lower_bound(uniq.begin(), uniq.end(), arr[i]) - uniq.begin() << ' ';
+    }
+
+    //std::erase(std::unique(temp.begin(), temp.end()), temp.end());
 }
