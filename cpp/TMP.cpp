@@ -30,7 +30,6 @@ int main() {
     typedef Ratio<2, 3> rat;
     typedef Ratio<3, 2> rat2;
     using rat3 =  Ratio_add<rat, rat2>;
-    using rat4 = Ratio_add<rat, rat3>;
 
     std::cout << rat3::num << " / " << rat3::den << std::endl;
 }
