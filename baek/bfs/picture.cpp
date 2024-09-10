@@ -40,7 +40,7 @@ int main(void) {
                         int nx = cur.first + dx[dir];
                         int ny = cur.second + dy[dir];
 
-                        if(nx < 0 || ny < 0 || nx >= 6 || ny >= 5) continue;
+                        if(nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
                         if(board[nx][ny] == 0 || vis[nx][ny] == 1) continue;
                         vis[nx][ny] = 1;
                         q.push({nx, ny});
