@@ -3,3 +3,6 @@
 .vscode/tasks.json
 *.exe
 *.json
+*.pdb
+*.ilk
+*.obj
