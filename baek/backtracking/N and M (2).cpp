@@ -1,7 +1,8 @@
-//15649
+//15650
 #include <bits/stdc++.h>
 
 int N, M;
+
 int arr[9];
 bool used[9];
 
@@ -12,10 +13,12 @@ void func(int n, int m, int cnt) {
         return;
     }
 
-    for(int i = 1; i <= n; i++) {
+    int i = 1;
+    if(cnt != 0) i = arr[cnt - 1] + 1;
+    for(; i <= n; i++) {
         if(used[i] == false) {
-            arr[cnt] = i;
             used[i] = true;
+            arr[cnt] = i;
             func(n, m, cnt + 1);
             used[i] = false;
         }

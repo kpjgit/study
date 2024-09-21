@@ -1,27 +1,31 @@
 //9663
 #include <bits/stdc++.h>
 
-int n;
-int num = 0;
-bool used1[20];
-bool used2[20];
-bool used3[20];
+int N;
 
-void func(int cur) {
-    if(cur == n) {
-        num++;
+bool used_v[14];
+bool used_d0[27];
+bool used_d1[27];
+
+int ans = 0;
+
+void func(int n, int cnt) {
+    if(cnt == n) {
+        ans++;
         return;
     }
 
     for(int i = 0; i < n; i++) {
-        if(used1[i] || used2[i + cur] || used3[cur + n - i -1]) continue;
-        used1[i] = 1;
-        used2[i + cur] = 1;
-        used3[cur + n - i - 1] = 1;
-        func(cur + 1);
-        used1[i] = 0;
-        used2[i + cur] = 0;
-        used3[cur + n - i - 1] = 0;
+        if(used_v[i] || used_d0[cnt + i] || used_d1[cnt - i + n - 1]) continue;
+    
+    
+        used_v[i] = true;
+        used_d0[cnt + i] = true;
+        used_d1[cnt - i + n - 1] = true;
+        func(n, cnt + 1);
+        used_v[i] = false;
+        used_d0[cnt + i] = false;
+        used_d1[cnt - i + n - 1] = false;
     }
 }
 
@@ -29,7 +33,7 @@ int main(void) {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    std::cin >> n;
-    func(0);
-    std::cout << num;
+    std::cin >> N;
+    func(N, 0);
+    std::cout << ans;
 }
