@@ -1,23 +1,26 @@
 //15683
 #include <bits/stdc++.h>
 
-int n, m;
-int office[10][10];
-int vis[10][10];
+int N, M;
 std::vector<std::pair<int, int>> cams;
-int ans = 0;
+int office[8][8];
+int vis[8][8];
 
 int dx[] = {1, 0, -1, 0};
 int dy[] = {0, 1, 0, -1};
 
-void check(int x, int y, int dir) {
+int ans = 64;
+
+void func(int x, int y, int dir, int& temp) {
     dir %= 4;
-    while(1) {
+    while(true) {
         x += dx[dir];
         y += dy[dir];
-        if(x < 0 || x >= n || y < 0 || y >= m || vis[x][y] == 6) return;
-        if(vis[x][y] != 0) continue;
-        vis[x][y] = -1;
+        if(x < 0 || y < 0 || x >= N || y >= M || office[x][y] == 6) return;
+        if(vis[x][y] == 0) {
+            vis[x][y] = -1;
+            temp++;
+        }
     }
 }
 
@@ -25,59 +28,56 @@ int main(void) {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    std::cin >> n >> m;
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < m; j++) {
-            std::cin >> office[i][j];
-            if(office[i][j] > 0 && office[i][j] < 6) {
-                cams.push_back({i, j});
+    std::cin >> N >> M;
+    int temp;
+    int walls = 0;
+    for(int i = 0; i < N; i++) {
+        for(int j = 0; j < M; j++) {
+            std::cin >> temp;
+            if(temp > 0) {
+                office[i][j] = temp;
+                if(temp < 6) cams.push_back({i, j});
+                else walls++;
             }
-            if(office[i][j] == 0) ans++;
         }
     }
 
-    for(int temp = 0; temp < (1 << (2 * cams.size())); temp++) { //각 카메라 방향 정보를 담고 있는 cams 갯수만큼 자릿수의 4진수 or cams * 2만큼 2진수
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < m; j++) {
+    for(int rot = 0; rot < (1 << (cams.size() * 2)); rot++) { //4진법으로 카메라의 방향을 저장
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < M; j++){
                 vis[i][j] = office[i][j];
             }
         }
 
-        int brute = temp;
+        int brute = rot;
+        int temp = 0;
         for(int i = 0; i < cams.size(); i++) {
             int dir = brute % 4;
             brute /= 4;
-            int x = cams[i].first;
-            int y = cams[i].second;
+            int x, y;
+            std::tie(x, y) = cams[i];
+            
             if(office[x][y] == 1) {
-                check(x, y, dir);
+                func(x, y, dir, temp);
             } else if(office[x][y] == 2) {
-                check(x, y, dir);
-                check(x, y, dir + 2);
+                func(x, y, dir, temp);
+                func(x, y, dir + 2, temp);
             } else if(office[x][y] == 3) {
-                check(x, y, dir);
-                check(x, y, dir + 1);
+                func(x, y, dir, temp);
+                func(x, y, dir + 1, temp);
             } else if(office[x][y] == 4) {
-                check(x, y, dir);
-                check(x, y, dir + 1);
-                check(x, y, dir + 2);
-            } else { //5
-                check(x, y, dir);
-                check(x, y, dir + 1);
-                check(x, y, dir + 2);
-                check(x, y, dir + 3);
+                func(x, y, dir, temp);
+                func(x, y, dir + 1, temp);
+                func(x, y, dir + 2, temp);
+            } else if(office[x][y] == 5) {
+                func(x, y, dir, temp);
+                func(x, y, dir + 1, temp);
+                func(x, y, dir + 2, temp);
+                func(x, y, dir + 3, temp);
             }
         }
-
-        int val = 0;
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < m; j++) {
-                if(vis[i][j] == 0) {
-                    val++;
-                }
-            }
-        }
-        ans = std::min(ans, val);
+        int next = N * M - temp - cams.size() - walls;
+        ans = std::min(ans, next);
     }
 
     std::cout << ans;
