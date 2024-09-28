@@ -21,7 +21,7 @@ int main(void){
     }
 
     std::vector<bool> brute(chicken.size(), true);
-    std::fill(brute.begin(), brute.begin() + chicken.size() - M, false); //ture는 폐업
+    std::fill(brute.begin(), brute.begin() + chicken.size() - M, false); //false는 폐업
     
     int ans = 10000;
     do {
