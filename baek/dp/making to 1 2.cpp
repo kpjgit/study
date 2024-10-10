@@ -1,35 +1,44 @@
 //12852
 #include <bits/stdc++.h>
 
-int x;
-int arr[1000005];
-int route[1000005];
+int N;
+
+int arr[1000001];
+int route[1000001];
 
 int main(void) {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    std::cin >> x;
+    std::cin >> N;
 
     arr[1] = 0;
-    for(int i = 2; i <= x; i++) {
-        arr[i] = arr[i - 1] + 1;
+    for(int i = 2; i <= N; i++) {
+        arr[i] = arr[i - 1];
         route[i] = i - 1;
-        if(i % 2 == 0 && arr[i] > arr[i / 2] + 1) {
-            arr[i] = arr[i / 2] + 1;
-            route[i] = i / 2;
+
+        if(i % 2 == 0) {
+            if(arr[i] > arr[i / 2]) {
+                arr[i] = arr[i / 2];
+                route[i] = i / 2;
+            }
         }
-        if(i % 3 == 0 && arr[i] > arr[i / 3] + 1) {
-            arr[i] = arr[i / 3] + 1;
-            route[i] = i / 3;
+
+        if(i % 3 == 0) {
+            if(arr[i] > arr[i / 3] ) {
+                arr[i] = arr[i / 3];
+                route[i] = i / 3;
+            }
         }
+
+        arr[i]++;
     }
 
-    std::cout << arr[x] << '\n';
-    int cur = x;
-    while(1) {
-        std::cout << cur << ' ';
-        if(cur == 1) break;
-        cur = route[cur];
+    std::cout << arr[N] << '\n';
+    int idx = N;
+    std::cout << N << ' ';
+    for(int i = 0; i < arr[N]; i++) {
+        std::cout << route[idx] << ' ';
+        idx = route[idx];
     }
 }
