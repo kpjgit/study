@@ -24,6 +24,7 @@ int main(void) {
 
             table[i][j] = std::min({table[i - 1][j], table[i][j - 1], table[i - 1][j - 1]}) + 1;
             //각각 i, j로부터 바로 왼쪽, 위, 대각선의 정사각형, 값에 따라 i, j로 오도록 정사각형을 잡아 늘릴 수 있다
+            //각 방향에서 가장 작은 값이 i, j의 크기를 결장한다
             ans = std::max(ans, table[i][j]);
         }
     }

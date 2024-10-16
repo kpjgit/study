@@ -1,40 +1,23 @@
 //12865 그리디 아님 dp로 풀이
 #include <bits/stdc++.h>
 
-int n, k;
-std::pair<int, int> stuffs[101];//무게, 가치
-int arr[101][100001];//a[i][j], i번째 물건에 대해 j만큼의 무게 제한일 때 최대 만족치
-int arr1[101];
+int N, K;
+std::pair<int, int> arr[101]; //W, V
+int table[100001][101]; //배낭 무게가 i, 물건 j를 넣지 말지 결정
 
 int main(void) {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     
-    std::cin >> n >> k;
-    for(int i = 0; i < n; i++) {
-        std::cin >> stuffs[i].first >> stuffs[i].second;
-    }
+    std::cin >> N >> K;
+    for(int i = 1; i <= N; i++) std::cin >> arr[i].first >> arr[i].second;
 
-    for(int i = 1; i <= n; i++) {
-        for(int j = 1; j <= k; j++) {
-            if(j >= stuffs[i].first) {
-                arr[i][j] = std::max(arr[i - 1][j], arr[i - 1][j - stuffs[i].first] + stuffs[i].second);
-            } else {
-                arr[i][j] = arr[i - 1][j];
-            }
+    for(int i = 1; i <= K; i++) {
+        for(int j = 1; j <= N; j++) {
+            if(i >= arr[j].first) table[i][j] = std::max(table[i][j - 1], table[i - arr[j].first][j - 1] + arr[j].second);
+            else table[i][j] = table[i][j - 1];
         }
     }
 
-    /*
-    for(int i = 1; i <= N; i++) {
-        for(int j = k; j >= 1; j--) {
-            if(stuffs[i].first <= j) {
-                arr1[j] = std::max(arr1[j], arr1[j - stuffs[i].first] + stuffs[i].second);
-            }
-        }
-    }
-    std::cout << arr1[k];
-    */
-
-    std::cout << arr[n][k];
+    std::cout << table[K][N];
 }
