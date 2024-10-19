@@ -1,17 +1,16 @@
 //1978
 #include <bits/stdc++.h>
 
-int n;
+int N;
 
+bool func(int a) {
+    if(a == 1) return false;
 
-bool is_prime(int x) {
-    if(x == 1) return 0;
-
-    for(int i = 2; i * i <= x; i++) {
-        if(x % i == 0) return 0;
+    for(int i = 2; i * i <= a; i++) {
+        if(a % i == 0) return false;
     }
 
-    return 1;
+    return true;
 }
 
 int main(void) {
@@ -19,11 +18,12 @@ int main(void) {
     std::cin.tie(nullptr);
 
     int ans = 0;
-    std::cin >> n;
-    for(int i = 0; i < n; i++) {
+    std::cin >> N;
+    for(int i = 0; i < N; i++) {
         int temp;
         std::cin >> temp;
-        if(is_prime(temp)) ans++;
+
+        if(func(temp)) ans++;
     }
 
     std::cout << ans;
