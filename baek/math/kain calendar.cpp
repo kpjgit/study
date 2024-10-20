@@ -1,8 +1,7 @@
 //6064 연립합동방정식
 #include <bits/stdc++.h>
 
-int k;
-int m, n, x, y;
+int T, M, N, x, y; //x, y는 M, N으로 나눈 나머지
 
 int gcd(int a, int b) {
     if(a == 0) return b;
@@ -13,14 +12,14 @@ int lcm(int a, int b) {
     return a / gcd(a, b) * b;
 }
 
-int func() {
-    int mnlcm = lcm(m, n);
-    if(x == m) x = 0;
-    if(y == n) y = 0;
+int func(int M, int N, int x, int y) {
+    if(x == M) x = 0;
+    if(y == N) y = 0;
 
-    for(int i = x; i <= mnlcm; i += m) {
+    int l = lcm(M, N);
+    for(int i = x; i <= l; i += M) {
         if(i == 0) continue;
-        if(i % n == y) return i;
+        if(i % N == y) return i;
     }
 
     return -1;
@@ -30,12 +29,9 @@ int main(void){
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    std::cin >> k;
-
-    for(int i = 0; i < k; i++) {
-        std::cin >> m >> n >> x >> y;
-        std::cout << func() << '\n';
+    std::cin >> T;
+    for(int num = 0; num < T; num++) {
+        std::cin >> M >> N >> x >> y;
+        std::cout << func(M, N, x, y) <<'\n';
     }
-
-
 }

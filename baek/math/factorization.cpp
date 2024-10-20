@@ -1,21 +1,22 @@
 //11653
 #include <bits/stdc++.h>
 
-int n;
+int N;
 
 int main(void) {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    std::cin >> n;
-
-    int temp = n;
-    for(int i = 2; i * i <= n; i++) {
-        while(temp % i == 0) {
-            std::cout << i << '\n';
-            temp /= i;
-        }
+    std::cin >> N;
+    std::vector<int> primes;
+    int i = 2;
+    while(i * i <= N) {
+        if(N % i == 0) {
+            N /= i;
+            primes.push_back(i);
+        } else i++;
     }
+    if(N > 1) primes.push_back(N);
 
-    if(temp != 1) std::cout << temp;
+    for(int i : primes) std::cout << i << '\n';
 }
