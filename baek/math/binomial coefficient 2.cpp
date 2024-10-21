@@ -12,7 +12,7 @@ int main(void) {
         arr[i][0] = 1;
         arr[i][i] = 1;
         for(int j = 1; j < i; j++) {
-            arr[i][j] = (arr[i - 1][j] + arr[i - 1][j - 1] % 10007);
+            arr[i][j] = (arr[i - 1][j] + arr[i - 1][j - 1]) % 10007;
         }
     }
 
