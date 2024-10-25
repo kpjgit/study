@@ -1,39 +1,36 @@
 //1920
 #include <bits/stdc++.h>
 
-int n, m;
-int arr[100001];
+int N, M;
+int arr[100000];
 
 int main(void) {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    std::cin >> n;
-    for(int i = 0; i < n; i++) std::cin >> arr[i];
-    std::sort(arr, arr + n);
+    std::cin >> N;
+    for(int i = 0; i < N; i++) std::cin >> arr[i];
+    std::sort(arr, arr + N);
 
-    std::cin >> m;
-    for(int i = 0; i < m; i++) {
-        int x;
-        std::cin >> x;
+    std::cin >> M;
+    for(int num = 0; num < M; num++) {
+        int input;
+        std::cin >> input;
 
         int st = 0;
-        int en = n - 1;
+        int en = N - 1;
+        bool ans = false;
+        
         while(st <= en) {
             int mid = (st + en) / 2;
 
-            if(arr[mid] < x) {
-                st = mid + 1;
-            } else if(arr[mid] > x) {
-                en = mid - 1;
-            } else {
-                std::cout << 1 << '\n';
+            if(arr[mid] == input) {
+                ans = true;
                 break;
-            }
+            } else if(arr[mid] > input) en = mid - 1;
+            else st = mid + 1; //arr[mid] < input
         }
-
-        if(st > en) std::cout << 0 << '\n';
-
-        //std::cout << std::binary_search(arr, arr + n, x);
+        std::cout << ans << '\n';
+        //std::cout << std::binary_search(a, arr + N, input);
     }
 }
