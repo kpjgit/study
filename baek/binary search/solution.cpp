@@ -21,7 +21,7 @@ int main(void) {
             ans1 = arr[idx + 1];
         }
 
-        if(idx != i && std::abs(arr[idx] + arr[i]) < std::abs(ans0 + ans1)) {
+        if(idx < N && idx != i && std::abs(arr[idx] + arr[i]) < std::abs(ans0 + ans1)) {
             ans0 = arr[i];
             ans1 = arr[idx];
         }
