@@ -1,26 +1,25 @@
 //1927
 #include <bits/stdc++.h>
 
-int n;
-std::priority_queue<int, std::vector<int>, std::greater<int>> q;
+int N;
+std::priority_queue<int, std::vector<int>, std::greater<int>> pq;
 
 int main(void) {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    std::cin >> n;
-    for(int i = 0; i < n; i++) {
-        int input;
-        std::cin >> input;
-        if(input == 0) {
-            if(q.empty()) {
+    std::cin >> N;
+    int x;
+    for(int i = 0; i < N; i++) {
+        std::cin >> x;
+        if(x == 0) {
+            if(pq.empty()) {
                 std::cout << 0 << '\n';
-            } else {
-                std::cout << q.top() << '\n';
-                q.pop();
+                continue;
             }
-        } else {
-            q.push(input);
-        }
+
+            std::cout << pq.top() << '\n';
+            pq.pop();
+        } else pq.push(x);
     }
 }

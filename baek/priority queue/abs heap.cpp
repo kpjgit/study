@@ -1,36 +1,34 @@
 //11286
 #include <bits/stdc++.h>
 
-int n;
+int N;
 
-
-class cmp {
-public:
+struct cmp {
     bool operator() (int a, int b) {
-        if(a * a != b * b) return a * a > b * b; //std::abs(a)
-        return a > 0 && b < 0;
+        if(std::abs(a) != std::abs(b)) return std::abs(a) > std::abs(b);
+        return a > 0 && b < 0; //a==b 일때 false 반환해야함
     }
 };
 
-std::priority_queue<int, std::vector<int>, cmp> q;
+std::priority_queue<int, std::vector<int>, cmp> pq;
 
 int main(void) {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    std::cin >> n;
-    for(int i = 0; i < n; i++) {
-        int input;
-        std::cin >> input;
-        if(input == 0) {
-            if(q.empty()) {
+    std::cin >> N;
+    int val;
+    for(int i = 0; i < N; i++) {
+        std::cin >> val;
+
+        if(val == 0) {
+            if(pq.empty()) {
                 std::cout << 0 << '\n';
-            } else {
-                std::cout << q.top() << '\n';
-                q.pop();
+                continue;
             }
-        } else {
-            q.push(input);
-        }
+
+            std::cout << pq.top() << '\n';
+            pq.pop();
+        } else pq.push(val);
     }
 }
