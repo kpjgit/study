@@ -1,44 +1,43 @@
 //1991
 #include <bits/stdc++.h>
 
-int n;
-char lc[27];
-char rc[27];
+int N;
+int left[26];
+int right[26];
 
-void preorder(char cur) {
-    std::cout << cur << ' ';
-    if(lc[cur - 'A']) preorder(lc[cur - 'A']);
-    if(rc[cur - 'A']) preorder(rc[cur - 'A']);
+void preorder(int root) {
+    std::cout << static_cast<char>(root + 'A');
+    if(left[root]) preorder(left[root]);
+    if(right[root]) preorder(right[root]);
 }
 
-void inorder(char cur) {
-    if(lc[cur - 'A']) inorder(lc[cur - 'A']);
-    std::cout << cur << ' ';
-    if(rc[cur - 'A']) inorder(rc[cur - 'A']);
+void inorder(int root) {
+    if(left[root]) inorder(left[root]);
+    std::cout << static_cast<char>(root + 'A');
+    if(right[root]) inorder(right[root]);
 }
 
-void postorder(char cur) {
-    if(lc[cur - 'A']) postorder(lc[cur - 'A']);
-    if(rc[cur - 'A']) postorder(rc[cur - 'A']);
-    std::cout << cur << ' ';
+void postorder(int root) {
+    if(left[root]) postorder(left[root]);
+    if(right[root]) postorder(right[root]);
+    std::cout << static_cast<char>(root + 'A');
 }
 
 int main(void) {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    std::cin >> n;
-    for(int i = 0; i < n; i++) {
-        char root, l, r;
-        std::cin >> root >> l >> r;
-        if(l != '.') lc[root - 'A'] = l;
-        if(r != '.') rc[root - 'A'] = r;
+    std::cin >> N;
+    char cur, l, r;
+    for(int i = 1; i <= N; i++) {
+        std::cin >> cur >> l >> r;
+        if(l != '.') left[cur - 'A'] = l - 'A';
+        if(r != '.') right[cur - 'A'] = r - 'A';
     }
 
-    preorder('A');
+    preorder(0);
     std::cout << '\n';
-    inorder('A');
+    inorder(0);
     std::cout << '\n';
-    postorder('A');
-    std::cout << '\n';
+    postorder(0);
 }

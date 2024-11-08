@@ -1,20 +1,21 @@
 //11725
 #include <bits/stdc++.h>
 
-int n;
-std::vector<int> adj[100001];
+int N;
+std::vector<int> adj_list[100001];
+
 int par[100001];
 
 int main(void) {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    std::cin >> n;
-    for(int i = 0; i < n - 1; i++) {
-        int st, en;
-        std::cin >> st >> en;
-        adj[st].push_back(en);
-        adj[en].push_back(st);
+    std::cin >> N;
+    int u, v;
+    for(int i = 1; i < N; i++) {
+        std::cin >> u >> v;
+        adj_list[u].push_back(v);
+        adj_list[v].push_back(u);
     }
 
     std::queue<int> q;
@@ -22,12 +23,14 @@ int main(void) {
     while(!q.empty()) {
         int cur = q.front();
         q.pop();
-        for(int next : adj[cur]) {
-            if(next == par[cur]) continue;
-            q.push(next);
-            par[next] = cur;
+
+        for(int dir : adj_list[cur]) {
+            if(dir == par[cur]) continue;
+            
+            par[dir] = cur;
+            q.push(dir);
         }
     }
 
-    for(int i = 2; i <= n; i++) std::cout << par[i] <<'\n';
+    for(int i = 2; i <= N; i++) std::cout << par[i] << '\n';
 }
