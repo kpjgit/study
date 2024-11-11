@@ -1,49 +1,39 @@
 //2252
 #include <bits/stdc++.h>
 
-int n, m;
-std::vector<int> adj[32001]; //A B 입력 A -> B 그래프
+int N, M;
+std::vector<int> adj_list[32001]; //adj_list[i]일때 학생 i는 벡터에 속하는 학생보다 키가 작다
 int indegree[32001];
+
+std::vector<int> ans;
 
 int main(void) {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    std::cin >> n >> m;
-    for(int i = 0; i < m; i++) {
-        int st, en;
-        std::cin >> st >> en;
-        adj[st].push_back(en);
-        indegree[en]++;
+    std::cin >> N >> M;
+    int A, B;
+    for(int i = 0; i < M; i++) {
+        std::cin >> A >> B;
+        adj_list[A].push_back(B);
+        indegree[B]++;
     }
 
     std::queue<int> q;
-    for(int i = 1; i <= n; i++) {
+    for(int i = 1; i <= N; i++) {
         if(indegree[i] == 0) q.push(i);
     }
+
     while(!q.empty()) {
         int cur = q.front();
         q.pop();
-        std::cout << cur << ' ';
-        for(auto e : adj[cur]) {
-            indegree[e]--;
-            if(indegree[e] == 0) q.push(e);
+        ans.push_back(cur);
+
+        for(int dir : adj_list[cur]) {
+            indegree[dir]--;
+            if(indegree[dir] == 0) q.push(dir);
         }
     }
     
-   /*
-    std::stack<int> s;
-    for(int i = 1; i <= n; i++) {
-        if(indegree[i] == 0) s.push(i);
-    }
-    while(!s.empty()) {
-        int cur = s.top();
-        s.pop();
-        std::cout << cur << ' ';
-        for(auto e : adj[cur]) {
-            indegree[e]--;
-            if(indegree[e] == 0) s.push(e);
-        }
-    }
-    */
+    for(int i : ans) std::cout << i << ' ';
 }
