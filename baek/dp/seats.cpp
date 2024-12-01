@@ -19,6 +19,8 @@ int main(void) {
     }
     vip.push(N + 1);
 
+    table[0] = 1; //연속된 좌석의 갯수가 0개일때도 고려해야함
+    table[1] = 1;
     table[2] = 2;
     table[3] = 3;
     for(int i = 4; i <= N; i++) table[i] = table[i - 1] + table[i - 2];
