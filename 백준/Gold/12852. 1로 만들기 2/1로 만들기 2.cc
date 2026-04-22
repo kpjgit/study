@@ -13,24 +13,22 @@ int main(void) {
 
     arr[1] = 0;
     for(int i = 2; i <= N; i++) {
-        arr[i] = arr[i - 1];
+        arr[i] = arr[i - 1] + 1;
         route[i] = i - 1;
 
         if(i % 2 == 0) {
             if(arr[i] > arr[i / 2]) {
-                arr[i] = arr[i / 2];
+                arr[i] = arr[i / 2] + 1;
                 route[i] = i / 2;
             }
         }
 
         if(i % 3 == 0) {
-            if(arr[i] > arr[i / 3] ) {
-                arr[i] = arr[i / 3];
+            if(arr[i] > arr[i / 3]) {
+                arr[i] = arr[i / 3] + 1;
                 route[i] = i / 3;
             }
         }
-
-        arr[i]++;
     }
 
     std::cout << arr[N] << '\n';
