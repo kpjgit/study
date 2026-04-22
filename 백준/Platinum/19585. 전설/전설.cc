@@ -8,7 +8,7 @@ int C, N, Q;
 //trie
 const int ROOT = 1;
 int unused = 2;
-const int MX = 4000 * 2000;
+const int MX = 5000 * 2000;
 bool chk[MX];
 int nxt[MX][26];
 
