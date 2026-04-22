@@ -1,12 +1,6 @@
 #include <iostream>
-#include <queue>
-#include <algorithm>
-#include <unordered_map>
 
 int A, B;
-
-//idx, cost
-std::unordered_map<long long, int> dist;
 
 int main() {
     std::ios::sync_with_stdio(false);
@@ -14,30 +8,20 @@ int main() {
     
     std::cin >> A >> B;    
     
-    std::queue<long long> q;
-    dist[A] = 0;
-    q.push(A);
-    while(!q.empty()) {
-        long long cur = q.front();
-        q.pop();
-        
-        if(cur == B) break;
-        
-        long long temp;
-        
-        temp = cur * 2;
-        if(temp <= B && dist.find(temp) == dist.end()) {
-            dist[temp] = dist[cur] + 1;
-            q.push(temp);
-        }
-        
-        temp = cur * 10 + 1;
-        if(temp <= B && dist.find(temp) == dist.end()) {
-            dist[temp] = dist[cur] + 1;
-            q.push(temp);
+    int cnt = 0;
+    while(B > A) {
+        if(B % 10 == 1) {
+            B /= 10;
+            cnt++;
+        } else if(B % 2 == 0) {
+            B /= 2;
+            cnt++;
+        } else {
+            std::cout << -1;
+            return 0;
         }
     }
     
-    if(dist.find(B) == dist.end()) std::cout << -1;
-    else std::cout << dist [B] + 1;
+    if(B == A) std::cout << cnt + 1;
+    else std::cout << -1;
 }
