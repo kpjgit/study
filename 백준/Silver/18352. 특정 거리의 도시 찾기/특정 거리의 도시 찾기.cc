@@ -19,7 +19,6 @@ int main() {
         adj[u].push_back(v);
     }
     
-    std::vector<int> ans;
     std::fill(dist + 1, dist + N + 1, -1);
     std::queue<int> q;
     q.push(X);
@@ -32,12 +31,12 @@ int main() {
             if(dist[nxt] != -1) continue;
             
             dist[nxt] = dist[cur] + 1;
-            
-            if(dist[nxt] == K) ans.push_back(nxt);
-            else q.push(nxt);
+            q.push(nxt);
         }
     }
     
+    std::vector<int> ans;
+    for(int i = 1; i <= N; i++) if(dist[i] == K) ans.push_back(i);
     std::sort(ans.begin(), ans.end());
     for(int a : ans) std::cout << a << '\n';
     if(ans.size() == 0) std::cout << -1;
